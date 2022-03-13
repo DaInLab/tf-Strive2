@@ -30,3 +30,16 @@ ggplot(mortes, aes(x=doses_vacina)) + geom_bar(fill = c("Red", "Blue", "Purple",
 datas <- subset(mortes, data_obito >= "2020-01-01")
 datas <- table(datas$data_obito)
 plot(datas, type="l", las = 2, col="black", ylab = "Obitos diários", main = "Óbitos diários por Covid - Bauru")
+
+library(stringr)
+comorbidades <- data.frame(table(mortes$comorbidade))
+comorbidades <- str_split(comorbidades$Var1, " e ")
+comorbidades <- unlist(comorbidades)
+comorbidades <- trimws(comorbidades, "l")
+comorbidades <- trimws(comorbidades, "r")
+comorbidades <- data.frame(table(comorbidades))
+comorbidades <- comorbidades[with(comorbidades, order(-Freq)), ]
+comorbidades <- comorbidades[1:12, ]
+pie_labels <- paste0(comorbidades$comorbidades, " = ", comorbidades$Freq)
+pie(comorbidades$Freq, labels = pie_labels)
+

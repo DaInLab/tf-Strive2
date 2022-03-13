@@ -76,6 +76,25 @@ plot(datas, type="l", las = 2, col="black", ylab = "Obitos diários", main = "Ó
 ```
 \newpage
 
+# Relação entre comorbidades e óbitos
+O gráfico a seguir demonstra a frequência de ocorrência das comorbidades mais comuns entre os óbitos registrados, demonstrando que a covid-19 oferece maior risco entre as pessoas que sofrem de diabetes, obesidade, hipertensão, problemas cardíacos ou renais.
+\newline
+
+```{r grafico_comorbidades, echo = FALSE, warning = FALSE}
+library(stringr)
+comorbidades <- data.frame(table(mortes$comorbidade))
+comorbidades <- str_split(comorbidades$Var1, " e ")
+comorbidades <- unlist(comorbidades)
+comorbidades <- trimws(comorbidades, "l")
+comorbidades <- trimws(comorbidades, "r")
+comorbidades <- data.frame(table(comorbidades))
+comorbidades <- comorbidades[with(comorbidades, order(-Freq)), ]
+comorbidades <- comorbidades[1:12, ]
+pie_labels <- paste0(comorbidades$comorbidades, " = ", comorbidades$Freq)
+pie(comorbidades$Freq, labels = pie_labels)
+```
+\newpage
+
 # Permanência hospitalar
 
 Para calcular o tempo de permanência hospitalar, supôs-se que a data de admissão no hospital seria a mesma da data de início dos sintomas, com permanência até a data de óbito. Os dados foram agrupados pelo tipo de hospital e registros sem uma das duas datas ou com uma delas claramente incorreta (como registros que possuíam data de óbito em 23-01-1900) foram descartados. É interessante também notar a diferença entre a quantidade de outliers entre os dois tipos de hospitais.
