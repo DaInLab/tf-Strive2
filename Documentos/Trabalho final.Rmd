@@ -2,7 +2,11 @@
 title: "Análise exploratória de dados - COVID EM BAURU"
 author: "Gabriel Gerotti"
 date: "11/03/2022"
-output: pdf_document
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
 ---
 
 O objetivo deste projeto é de identificar a característica dos casos e óbitos notificados de Covid-19 na cidade de Bauru. Este documento mostra gráficos para as seguintes análises:
